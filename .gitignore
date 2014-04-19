@@ -11,3 +11,4 @@ packages/Nancy.Hosting.Self.*
 packages/Nancy.Viewengines.Nustache.*
 .nuget
 
+*.userprefs
