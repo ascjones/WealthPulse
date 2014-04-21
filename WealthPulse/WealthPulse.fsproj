@@ -70,20 +70,21 @@
       <HintPath>..\packages\Nancy.Hosting.Self.0.21.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <PropertyGroup>
-    <PostBuildEvent>rmdir /Q /S views
-mkdir views
-xcopy $(ProjectDir)views views /S
-
-rmdir /Q /S content
-mkdir content
-xcopy $(ProjectDir)content content /S</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+  <Target Name="AfterBuild">
+      <ItemGroup>
+          <ViewFiles Include="views\*.*" />
+          <ContentFiles Include="content\**\*" />
+          <ViewsOut Include="$(OutputPath)views" />
+          <ContentOut Include="$(OutputPath)content" />
+      </ItemGroup>
+      <RemoveDir Directories="@(ViewsOut);@(ContentOut)" />
+      <MakeDir Directories="@(ViewsOut);@(ContentOut)" />
+      <Copy SourceFiles="@(ViewFiles)" DestinationFolder="@(ViewsOut)" />
+      <Copy SourceFiles="@(ContentFiles)" DestinationFiles="@(ContentFiles->'$(OutputPath)\content\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
 </Project>
