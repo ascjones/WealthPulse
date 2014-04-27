@@ -24,6 +24,7 @@ module Journal =
 
     type Header = {
         Date: System.DateTime;
+        EffectiveDate: System.DateTime option;
         Status: Status;
         Code: string option;
         Description: string;

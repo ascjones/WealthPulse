@@ -50,6 +50,10 @@ module Parser =
             let isDateChar c = isDigit c || c = '/' || c = '-' || c = '.'
             many1SatisfyL isDateChar "Expecting a date separated by / or - or ." .>> skipWS |>> System.DateTime.Parse
 
+        /// Parse a transaction header date, including an optional effective date after an '=' char
+        let parseTransactionHeaderDate = 
+            parseDate .>>. opt (pchar '=' >>. parseDate)
+
         /// Parse transaction status as Cleared or Uncleared
         let parseTransactionStatus = 
             let parseCleared = charReturn '*' Cleared
@@ -129,9 +133,9 @@ module Parser =
 
         /// Parse a complete transaction header
         let parseTransactionHeader =
-            let createHeader date status code payee comment =
-                {Date=date; Status=status; Code=code; Description=payee; Comment=comment}        
-            pipe5 parseDate parseTransactionStatus (opt parseCode) parsePayee (opt parseComment) createHeader
+            let createHeader (date,effectiveDate) status code payee comment =
+                {Date=date; EffectiveDate=effectiveDate; Status=status; Code=code; Description=payee; Comment=comment;}        
+            pipe5 parseTransactionHeaderDate parseTransactionStatus (opt parseCode) parsePayee (opt parseComment) createHeader
 
         /// Parse a complete transaction entry
         let parseTransactionEntry =
@@ -254,7 +258,7 @@ module Parser =
         /// Convert to a list of journal entries (transaction entries)
         let toEntryList ts =
             let transactionToJournal (h, es) =
-                let header = ({ Date=h.Date; Status=h.Status; Code=h.Code; Description=h.Description; Comment=h.Comment; } : Header)
+                let header = ({ Date=h.Date; EffectiveDate=h.EffectiveDate; Status=h.Status; Code=h.Code; Description=h.Description; Comment=h.Comment; } : Header)
                 let toEntry e =
                     let getAccountLineage (account: string) =
                         /// Use with fold to get all combinations.
@@ -336,3 +340,10 @@ module Parser =
         [<Fact>]
         let ``skipWS skips tabs and spaces`` () =
             testParse skipWS "   \t  \t \t " |> should equal (Some(()))
+
+        [<Fact>]
+        let ``parseTransactionHeader parses effective date`` () =
+            let header = testParse parseTransactionHeader "2014-04-27=2014-04-30 * Rent"
+            header.IsSome |> should equal true
+            header.Value.EffectiveDate |> should equal (System.DateTime.Parse("2014-04-30"))
+
