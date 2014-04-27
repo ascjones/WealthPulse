@@ -5,12 +5,13 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>3f76b8d5-0b39-42f0-9d72-fb1cd77e0cc3</ProjectGuid>
+    <ProjectGuid>3F76B8D5-0B39-42F0-9D72-FB1CD77E0CC3</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Journal</RootNamespace>
     <AssemblyName>Journal</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Name>Journal</Name>
+    <ProductVersion>12.0.0</ProductVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,34 +50,28 @@
   <ItemGroup>
     <Reference Include="FParsec">
       <HintPath>..\packages\FParsec.1.0.1\lib\net40-client\FParsec.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="FParsecCS">
       <HintPath>..\packages\FParsec.1.0.1\lib\net40-client\FParsecCS.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FsUnit.CustomMatchers">
-      <HintPath>..\packages\FsUnit.xUnit.1.2.1.2\lib\Net40\FsUnit.CustomMatchers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FsUnit.Xunit">
-      <HintPath>..\packages\FsUnit.xUnit.1.2.1.2\lib\Net40\FsUnit.Xunit.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="NHamcrest">
-      <HintPath>..\packages\FsUnit.xUnit.1.2.1.2\lib\Net40\NHamcrest.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="FsUnit.CustomMatchers">
+      <HintPath>..\packages\FsUnit.xUnit.1.2.2.1\Lib\net40\FsUnit.CustomMatchers.dll</HintPath>
+    </Reference>
+    <Reference Include="FsUnit.Xunit">
+      <HintPath>..\packages\FsUnit.xUnit.1.2.2.1\Lib\net40\FsUnit.Xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="NHamcrest">
+      <HintPath>..\packages\FsUnit.xUnit.1.2.2.1\Lib\net40\NHamcrest.dll</HintPath>
+    </Reference>
     <Reference Include="xunit">
-      <HintPath>..\packages\xunit.1.9.1\lib\net20\xunit.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
